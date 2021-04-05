@@ -25,35 +25,35 @@ UUT: Adder_3_bit PORT MAP( --map relevant ports to the RCA circuit
 process
     begin
     -- A = 000
-        AA <="000";    
+    AA <="000";    
     
     WAIT FOR 100 ns;  --change inputs
-    -- A=001
-        AA <="001";
+    -- A = 001
+    AA <="001";
     
     WAIT FOR 100 ns;  --change inputs
     -- A = 010
-        AA <="010";
+    AA <="010";
     
     WAIT FOR 100 ns;  --change inputs
     -- A = 011
-        AA <="011";
+    AA <="011";
     
     WAIT FOR 100 ns;  --change inputs
     -- A = 100
-        AA <="100";
+    AA <="100";
     
     WAIT FOR 100 ns; --change inputs
-    -- A=101
-        AA <="101";
+    -- A = 101
+    AA <="101";
     
     WAIT FOR 100 ns; --change inputs
-    -- A=110
-        AA <="110";
+    -- A = 110
+    AA <="110";
     
     WAIT FOR 100 ns; --change inputs
-    -- A=111
-        AA <="111";
+    -- A = 111
+    AA <="111";
     
     WAIT;
     
