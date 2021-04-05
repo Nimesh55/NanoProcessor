@@ -1,6 +1,9 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
+-- Full adder is created using 2 Half adders
+-- Simply added by Lab 3
+
 entity FA is
     Port ( A : in STD_LOGIC; --Set input and output ports
            B : in STD_LOGIC;
