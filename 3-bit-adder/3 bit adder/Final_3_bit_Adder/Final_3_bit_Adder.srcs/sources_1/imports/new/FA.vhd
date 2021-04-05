@@ -14,7 +14,7 @@ architecture Behavioral of FA is
 component HA  
         port (  
         A: in std_logic;  --define relevant ports for HA(half adder) circuit
-        B: in std_logic;  --Uncomment
+        B: in std_logic;  
         S: out std_logic;
         C: out std_logic);  
     end component;
