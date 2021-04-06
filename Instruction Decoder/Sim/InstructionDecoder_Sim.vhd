@@ -1,22 +1,4 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 11/08/2018 02:17:46 PM
--- Design Name: 
--- Module Name: InstructionDecoder_Sim - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
+
 LIBRARY IEEE;
 USE IEEE.STD_LOGIC_1164.ALL;
 
@@ -48,7 +30,6 @@ ARCHITECTURE Behavioral OF InstructionDecoder_Sim IS
    SIGNAL X : STD_LOGIC_VECTOR (11 DOWNTO 0);
    SIGNAL REG_SEL_0 : STD_LOGIC_VECTOR (2 DOWNTO 0);
    SIGNAL REG_SEL_1 : STD_LOGIC_VECTOR (2 DOWNTO 0);
-   --SIGNAL ZERO	: STD_LOGIC;
    SIGNAL IM_VALUE : STD_LOGIC_VECTOR(3 DOWNTO 0);
 
 BEGIN
@@ -71,11 +52,10 @@ BEGIN
    BEGIN
 
       JUMP_CHECK <= '0';
-      --		X <= "101110000000";
-      X <= "110010000100";
+
+      X <= "110010000100"; --jump flag == 1
       WAIT FOR 200 ns;
 
-      --		X <= "101100000011";
       X <= "100000000000";
       WAIT FOR 200 ns;
 
