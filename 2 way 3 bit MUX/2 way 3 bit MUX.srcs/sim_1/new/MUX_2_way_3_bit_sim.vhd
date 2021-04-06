@@ -12,8 +12,8 @@ component MUX_2_way_3_bit
             Selector : in STD_LOGIC);
 end component;
 signal Adder_3,JUMP_TO : std_logic_vector(2 downto 0);
-signal Output : std_logic_vector(2 downto 0);
 signal Selector : std_logic;
+signal Output : std_logic_vector(2 downto 0);
 begin
 UUT: MUX_2_way_3_bit
 port map(
@@ -27,9 +27,27 @@ begin
 Adder_3<="001";
 JUMP_TO<="100";
 Selector<='0';
-
 WAIT FOR 100ns;
+
 Selector<='1';
+WAIT FOR 100ns;
+
+Adder_3<="011";
+JUMP_TO<="101";
+Selector<='0';
+WAIT FOR 100ns;
+
+Selector<='1';
+WAIT FOR 100ns;
+
+Adder_3<="111";
+JUMP_TO<="011";
+Selector<='0';
+WAIT FOR 100ns;
+
+Selector<='1';
+WAIT FOR 100ns;
+
 WAIT;
 
 end process;

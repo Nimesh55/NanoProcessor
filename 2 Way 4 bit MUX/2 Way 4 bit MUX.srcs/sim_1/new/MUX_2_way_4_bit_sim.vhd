@@ -28,9 +28,28 @@ begin
 AddSubValue<="0010";
 InsDecValue<="1000";
 Selector<='0';
-
 WAIT FOR 100ns;
+
+
 Selector<='1';
+WAIT FOR 100ns;
+
+AddSubValue<="0011";
+InsDecValue<="1001";
+Selector<='0';
+WAIT FOR 100ns;
+
+Selector<='1';
+WAIT FOR 100ns;
+
+AddSubValue<="0111";
+InsDecValue<="1101";
+Selector<='0';
+WAIT FOR 100ns;
+
+Selector<='1';
+WAIT FOR 100ns;
+
 WAIT;
 
 end process;
