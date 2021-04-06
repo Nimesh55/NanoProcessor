@@ -1,43 +1,60 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 04/06/2021 03:35:53 PM
--- Design Name: 
--- Module Name: Reg_sim - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
 
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+ENTITY Reg_sim IS
+    --  Port ( );
+END Reg_sim;
 
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
+ARCHITECTURE Behavioral OF Reg_sim IS
+    COMPONENT Reg
+        PORT (
+            D : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
+            Enable : IN STD_LOGIC;
+            Clk : IN STD_LOGIC;
+            Res : IN STD_LOGIC;
+            Q : OUT STD_LOGIC_VECTOR (3 DOWNTO 0));
+    END COMPONENT;
 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
+    SIGNAL Enable, Clk, Res : STD_LOGIC;
+    SIGNAL D : STD_LOGIC_VECTOR(3 DOWNTO 0);
+    SIGNAL Q : STD_LOGIC_VECTOR(3 DOWNTO 0);
+    CONSTANT clock_period : TIME := 10ns;
 
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
+BEGIN
+    uut : Reg PORT MAP(
+        D => D,
+        Enable => Enable,
+        Clk => Clk,
+        Res => Res,
+        Q => Q
+    );
+    clock_process : PROCESS
+    BEGIN
+        Clk <= '0';
+        WAIT FOR clock_period/2;
+        Clk <= '1';
+        WAIT FOR clock_period/2;
+    END PROCESS;
 
-entity Reg_sim is
---  Port ( );
-end Reg_sim;
+    sim : PROCESS
+    BEGIN
+        Res <= '1';
+        WAIT FOR 100ns;
 
-architecture Behavioral of Reg_sim is
+        Res <= '0';
+        D <= "1010";
+        Enable <= '1';
+        WAIT FOR 100ns;
 
-begin
+        Res <= '0';
+        D <= "0101";
+        Enable <= '0';
+        WAIT FOR 100ns;
 
+        Res <= '1';
+        WAIT FOR 100ns;
 
-end Behavioral;
+        WAIT;
+
+    END PROCESS;
+END Behavioral;
