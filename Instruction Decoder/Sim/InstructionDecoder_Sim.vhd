@@ -17,82 +17,81 @@
 -- Additional Comments:
 -- 
 ----------------------------------------------------------------------------------
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
 
+ENTITY InstructionDecoder_Sim IS
+END InstructionDecoder_Sim;
 
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
+ARCHITECTURE Behavioral OF InstructionDecoder_Sim IS
 
-entity InstructionDecoder_Sim is
-end InstructionDecoder_Sim;
+   COMPONENT InstructionDecoder
+      PORT (
+         X : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
+         JUMP_CHECK : IN STD_LOGIC;
+         REG_EN : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
+         REG_SEL_0 : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
+         REG_SEL_1 : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
+         IM_VALUE : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
+         SUB : OUT STD_LOGIC;
+         LOAD_SEL : OUT STD_LOGIC;
+         JUMP_FLAG : OUT STD_LOGIC;
+         JUMP_TO : OUT STD_LOGIC_VECTOR(2 DOWNTO 0));
+   END COMPONENT;
 
-architecture Behavioral of InstructionDecoder_Sim is
-
-COMPONENT InstructionDecoder
-   PORT(    X: in std_logic_vector(11 downto 0);
-            JUMP_CHECK: in std_logic;
-            REG_EN: out std_logic_vector(2 downto 0);
-            REG_SEL_0: out std_logic_vector(2 downto 0);
-            REG_SEL_1: out std_logic_vector(2 downto 0);
-            IM_VALUE: out std_logic_vector(3 downto 0);
-            SUB : out std_logic;
-            LOAD_SEL : out std_logic;
-            JUMP_FLAG : out  std_logic;
-            JUMP_TO: out std_logic_vector(2 downto 0));
-END COMPONENT;
-
-SIGNAL JUMP_CHECK :STD_LOGIC;
-SIGNAL SUB	: STD_LOGIC;
-SIGNAL LOAD_SEL	: STD_LOGIC;
-SIGNAL JUMP_FLAG : STD_LOGIC;
-SIGNAL JUMP_TO : STD_logic_vector(2 downto 0);
-SIGNAL REG_EN: STD_logic_vector(2 downto 0);
-SIGNAL X : STD_LOGIC_VECTOR (11 DOWNTO 0);
-SIGNAL REG_SEL_0 :	STD_LOGIC_VECTOR (2 DOWNTO 0);
-SIGNAL REG_SEL_1 :	STD_LOGIC_VECTOR (2 DOWNTO 0);
---SIGNAL ZERO	: STD_LOGIC;
-SIGNAL IM_VALUE: std_logic_vector(3 downto 0);
+   SIGNAL JUMP_CHECK : STD_LOGIC;
+   SIGNAL SUB : STD_LOGIC;
+   SIGNAL LOAD_SEL : STD_LOGIC;
+   SIGNAL JUMP_FLAG : STD_LOGIC;
+   SIGNAL JUMP_TO : STD_LOGIC_VECTOR(2 DOWNTO 0);
+   SIGNAL REG_EN : STD_LOGIC_VECTOR(2 DOWNTO 0);
+   SIGNAL X : STD_LOGIC_VECTOR (11 DOWNTO 0);
+   SIGNAL REG_SEL_0 : STD_LOGIC_VECTOR (2 DOWNTO 0);
+   SIGNAL REG_SEL_1 : STD_LOGIC_VECTOR (2 DOWNTO 0);
+   --SIGNAL ZERO	: STD_LOGIC;
+   SIGNAL IM_VALUE : STD_LOGIC_VECTOR(3 DOWNTO 0);
 
 BEGIN
 
-   UUT: InstructionDecoder PORT MAP(
-		       
-               IM_VALUE => IM_VALUE,
-               SUB => SUB,
-               LOAD_SEL => LOAD_SEL,
-               JUMP_FLAG => JUMP_FLAG,
-               JUMP_TO => JUMP_TO,
-               X => X,
-               JUMP_CHECK => JUMP_CHECK,
-               REG_EN => REG_EN,
-               REG_SEL_0 => REG_SEL_0,
-               REG_SEL_1 => REG_SEL_1);
+   UUT : InstructionDecoder PORT MAP(
 
-PROCESS
-   
+      IM_VALUE => IM_VALUE,
+      SUB => SUB,
+      LOAD_SEL => LOAD_SEL,
+      JUMP_FLAG => JUMP_FLAG,
+      JUMP_TO => JUMP_TO,
+      X => X,
+      JUMP_CHECK => JUMP_CHECK,
+      REG_EN => REG_EN,
+      REG_SEL_0 => REG_SEL_0,
+      REG_SEL_1 => REG_SEL_1);
+
+   PROCESS
+
    BEGIN
-        
-        JUMP_CHECK<='0';
---		X <= "101110000000";
-        X <= "110010000100";
-		WAIT FOR 200 ns;
-		
---		X <= "101100000011";
-        X <= "100000000000";
-		WAIT FOR 200 ns;
-		
-		X <= "101010000001";
-		WAIT FOR 200 ns;
-		
-		JUMP_CHECK<='1';
-		X <= "011010000000";
-		WAIT FOR 100 ns;
-		
-		X <= "001111100000";
-		WAIT FOR 100 ns;
-		
-		X <= "001101010000";
-		WAIT;
-		
-END PROCESS;
 
-end Behavioral;
+      JUMP_CHECK <= '0';
+      --		X <= "101110000000";
+      X <= "110010000100";
+      WAIT FOR 200 ns;
+
+      --		X <= "101100000011";
+      X <= "100000000000";
+      WAIT FOR 200 ns;
+
+      X <= "101010000001";
+      WAIT FOR 200 ns;
+
+      JUMP_CHECK <= '1';
+      X <= "011010000000";
+      WAIT FOR 100 ns;
+
+      X <= "001111100000";
+      WAIT FOR 100 ns;
+
+      X <= "001101010000";
+      WAIT;
+
+   END PROCESS;
+
+END Behavioral;
