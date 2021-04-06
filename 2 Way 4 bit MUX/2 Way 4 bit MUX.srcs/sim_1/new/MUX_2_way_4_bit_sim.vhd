@@ -13,8 +13,8 @@ component MUX_2_way_4_bit
             Selector : in STD_LOGIC);
 end component;
 signal AddSubValue,InsDecValue : std_logic_vector(3 downto 0);
-signal OutputValue : std_logic_vector(3 downto 0);
 signal Selector : std_logic;
+signal OutputValue : std_logic_vector(3 downto 0);
 begin
 UUT: MUX_2_way_4_bit
 port map(

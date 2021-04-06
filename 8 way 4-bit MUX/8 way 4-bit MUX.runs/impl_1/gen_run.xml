@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GenRun Id="impl_1" LaunchPart="xc7a35tcpg236-1" LaunchTime="1617356652">
+  <File Type="BITSTR-BMM" Name="MUX_8_way_4_bit_bd.bmm"/>
   <File Type="ROUTE-PWR" Name="MUX_8_way_4_bit_power_routed.rpt"/>
   <File Type="PA-TCL" Name="MUX_8_way_4_bit.tcl"/>
-  <File Type="BITSTR-BMM" Name="MUX_8_way_4_bit_bd.bmm"/>
+  <File Type="OPT-DCP" Name="MUX_8_way_4_bit_opt.dcp"/>
   <File Type="ROUTE-PWR-SUM" Name="MUX_8_way_4_bit_power_summary_routed.pb"/>
   <File Type="REPORTS-TCL" Name="MUX_8_way_4_bit_reports.tcl"/>
-  <File Type="OPT-DCP" Name="MUX_8_way_4_bit_opt.dcp"/>
   <File Type="OPT-DRC" Name="MUX_8_way_4_bit_drc_opted.rpt"/>
   <File Type="OPT-HWDEF" Name="MUX_8_way_4_bit.hwdef"/>
   <File Type="PWROPT-DCP" Name="MUX_8_way_4_bit_pwropt.dcp"/>
@@ -25,19 +25,20 @@
   <File Type="ROUTE-BLACKBOX-DCP" Name="MUX_8_way_4_bit_routed_bb.dcp"/>
   <File Type="ROUTE-DRC" Name="MUX_8_way_4_bit_drc_routed.rpt"/>
   <File Type="ROUTE-DRC-PB" Name="MUX_8_way_4_bit_drc_routed.pb"/>
-  <File Type="ROUTE-DRC-RPX" Name="MUX_8_way_4_bit_drc_routed.rpx"/>
   <File Type="BITSTR-LTX" Name="MUX_8_way_4_bit.ltx"/>
-  <File Type="ROUTE-METHODOLOGY-DRC" Name="MUX_8_way_4_bit_methodology_drc_routed.rpt"/>
+  <File Type="ROUTE-DRC-RPX" Name="MUX_8_way_4_bit_drc_routed.rpx"/>
   <File Type="BITSTR-MMI" Name="MUX_8_way_4_bit.mmi"/>
+  <File Type="ROUTE-METHODOLOGY-DRC" Name="MUX_8_way_4_bit_methodology_drc_routed.rpt"/>
   <File Type="ROUTE-METHODOLOGY-DRC-RPX" Name="MUX_8_way_4_bit_methodology_drc_routed.rpx"/>
-  <File Type="ROUTE-METHODOLOGY-DRC-PB" Name="MUX_8_way_4_bit_methodology_drc_routed.pb"/>
   <File Type="BITSTR-SYSDEF" Name="MUX_8_way_4_bit.sysdef"/>
+  <File Type="ROUTE-METHODOLOGY-DRC-PB" Name="MUX_8_way_4_bit_methodology_drc_routed.pb"/>
   <File Type="ROUTE-PWR-RPX" Name="MUX_8_way_4_bit_power_routed.rpx"/>
   <File Type="ROUTE-STATUS" Name="MUX_8_way_4_bit_route_status.rpt"/>
   <File Type="ROUTE-STATUS-PB" Name="MUX_8_way_4_bit_route_status.pb"/>
   <File Type="ROUTE-TIMINGSUMMARY" Name="MUX_8_way_4_bit_timing_summary_routed.rpt"/>
   <File Type="ROUTE-TIMING-PB" Name="MUX_8_way_4_bit_timing_summary_routed.pb"/>
   <File Type="ROUTE-TIMING-RPX" Name="MUX_8_way_4_bit_timing_summary_routed.rpx"/>
+  <File Type="RDI-RDI" Name="MUX_8_way_4_bit.vdi"/>
   <File Type="ROUTE-CLK" Name="MUX_8_way_4_bit_clock_utilization_routed.rpt"/>
   <File Type="ROUTE-BUS-SKEW" Name="MUX_8_way_4_bit_bus_skew_routed.rpt"/>
   <File Type="ROUTE-BUS-SKEW-PB" Name="MUX_8_way_4_bit_bus_skew_routed.pb"/>
@@ -48,7 +49,6 @@
   <File Type="BITSTR-RBT" Name="MUX_8_way_4_bit.rbt"/>
   <File Type="BITSTR-NKY" Name="MUX_8_way_4_bit.nky"/>
   <File Type="BG-DRC" Name="MUX_8_way_4_bit.drc"/>
-  <File Type="RDI-RDI" Name="MUX_8_way_4_bit.vdi"/>
   <File Type="WBT-USG" Name="usage_statistics_webtalk.html"/>
   <FileSet Name="sources" Type="DesignSrcs" RelSrcDir="$PSRCDIR/sources_1">
     <Filter Type="Srcs"/>

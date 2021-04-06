@@ -19,8 +19,8 @@ component MUX_8_way_4_bit
            RegSelection : in STD_LOGIC_VECTOR (2 downto 0));
 end component;
 signal Reg0,Reg1,Reg2,Reg3,Reg4,Reg5,Reg6,Reg7 : std_logic_vector(3 downto 0);
-signal RegValue: std_logic_vector(3 downto 0);
 signal RegSelection : std_logic_vector(2 downto 0);
+signal RegValue: std_logic_vector(3 downto 0);
 
 begin
 UUT : MUX_8_way_4_bit
