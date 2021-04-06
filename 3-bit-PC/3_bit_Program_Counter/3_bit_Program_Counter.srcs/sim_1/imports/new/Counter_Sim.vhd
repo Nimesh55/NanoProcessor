@@ -2,7 +2,6 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 entity Counter_Sim is
---  Port ( );
 end Counter_Sim;
 
 architecture Behavioral of Counter_Sim is
@@ -18,7 +17,8 @@ architecture Behavioral of Counter_Sim is
     signal Res, Clk : std_logic;
     signal Next_Ins : std_logic_vector(2 downto 0);
     signal Current_Ins : std_logic_vector(2 downto 0);
-    constant clock_period : time := 10ns;
+    constant clock_period : time := 10ns; --setting a clock period
+
 begin
     UUT:Counter port map(
         Next_Ins=>Next_Ins,
