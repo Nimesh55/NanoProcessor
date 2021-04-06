@@ -20,6 +20,7 @@ architecture Behavioral of Reg is
     Res:in std_logic;
     Clk:in std_logic;
     Q : out std_logic;
+    En : in STD_LOGIC;
     Qbar : out std_logic  
     );
     end component;
@@ -36,17 +37,7 @@ architecture Behavioral of Reg is
     signal Clk_slow:std_logic;
     
 begin
-    process(Clk) begin
-        if (rising_edge(Clk)) then
-            if Enable='1' then
-                D0<=D(0);
-                D1<=D(1);
-                D2<=D(2);
-                D3<=D(3);
-            end if;
-        end if;
     
-    end process;
     Slow_clock0:Slow_Clock
     port map(
         Clk_In=>Clk,
@@ -54,34 +45,38 @@ begin
     );
     D_FF0: D_FF
     port map(
-        D=>D0,
+        D=>D(0),
         Res=>Res,
         Clk=>Clk_slow,
+        En => Enable,
         Q=>Q(0)
         
     );
     
     D_FF1: D_FF
     port map(
-        D=>D1,
+        D=>D(1),
         Res=>Res,
         Clk=>Clk_slow,
+        En => Enable,
         Q=>Q(1)
     );
     
     D_FF2: D_FF
     port map(
-        D=>D2,
+        D=>D(2),
         Res=>Res,
         Clk=>Clk_slow,
+        En => Enable,
         Q=>Q(2)
     );
     
     D_FF3: D_FF
     port map(
-        D=>D3,
+        D=>D(3),
         Res=>Res,
         Clk=>Clk_slow,
+        En => Enable,
         Q=>Q(3)
         
     );

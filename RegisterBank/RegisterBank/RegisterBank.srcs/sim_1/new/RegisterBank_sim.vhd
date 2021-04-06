@@ -46,7 +46,7 @@ ARCHITECTURE Behavioral OF RegisterBank_sim IS
     SIGNAL R5 : STD_LOGIC_VECTOR (3 DOWNTO 0);
     SIGNAL R6 : STD_LOGIC_VECTOR (3 DOWNTO 0);
     SIGNAL R7 : STD_LOGIC_VECTOR (3 DOWNTO 0);
-    CONSTANT clock_period : TIME := 10ns;
+    CONSTANT clock_period : TIME := 1ns;
 
 BEGIN
     uut : RegisterBank PORT MAP(
