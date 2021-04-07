@@ -15,9 +15,9 @@ entity MUX_8_way_4_bit is
 end MUX_8_way_4_bit;
 
 architecture Behavioral of MUX_8_way_4_bit is
-Component Decoder_3_to_8
+Component Decoder_3_to_8_MUX
     port(   I : in STD_LOGIC_VECTOR (2 downto 0);
-            EN : in STD_LOGIC;
+            Enable : in STD_LOGIC;
             Y : out STD_LOGIC_VECTOR (7 downto 0));
  end component;
 
@@ -30,9 +30,9 @@ component tri_state_buffer
 end component;
 begin
 
-Decoder_3_to_8_0 : Decoder_3_to_8
+Decoder_3_to_8_0 : Decoder_3_to_8_MUX
     port map (  I => RegSelection,
-            EN => '1',
+            Enable => '1',
             Y => YY);
 tri_state_buffer_0 : tri_state_buffer
     port map(   inputTri => Reg0,

@@ -19,6 +19,7 @@ architecture Behavioral of Reg is
  Res:in std_logic;
  Clk:in std_logic;
  Q : out std_logic;
+ En : in STD_LOGIC;
  Qbar : out std_logic  
  );
 end component;
@@ -40,6 +41,7 @@ begin
     port map(
         D=>D(0),
         Res=>Res,
+        En=>Enable,
         Clk=>Clk_slow,
         Q=>Q(0)
         
@@ -48,6 +50,7 @@ begin
     port map(
         D=>D(1),
         Res=>Res,
+        En=>Enable,
         Clk=>Clk_slow,
         Q=>Q(1)
         
@@ -56,6 +59,7 @@ begin
     port map(
         D=>D(2),
         Res=>Res,
+        En=>Enable,
         Clk=>Clk_slow,
         Q=>Q(2)
         
@@ -64,6 +68,7 @@ begin
     port map(
         D=>D(3),
         Res=>Res,
+        En=>Enable,
         Clk=>Clk_slow,
         Q=>Q(3)
         

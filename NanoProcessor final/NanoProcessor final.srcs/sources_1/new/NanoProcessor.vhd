@@ -92,7 +92,7 @@ ARCHITECTURE Behavioral OF NanoProcessor IS
     COMPONENT Instruction_Decoder
         PORT (
             INS : IN STD_LOGIC_VECTOR (11 DOWNTO 0); --Instruction
-            Jump_check : IN STD_LOGIC; --Register check for jump
+            Jump_check : in STD_LOGIC_VECTOR(3 downto 0); --Register check for jump
             Reg_enable : OUT STD_LOGIC_VECTOR (2 DOWNTO 0); --Register enable
             Reg_select_0 : OUT STD_LOGIC_VECTOR (2 DOWNTO 0); --Register select one
             Reg_select_1 : OUT STD_LOGIC_VECTOR (2 DOWNTO 0); --Register select two
@@ -152,7 +152,7 @@ ARCHITECTURE Behavioral OF NanoProcessor IS
     SIGNAL Instruction_bus : STD_LOGIC_VECTOR(11 DOWNTO 0);
 
     SIGNAL  Load_sel, Add_Sub_sel : STD_LOGIC;
-    signal Reg_sel_0,Reg_sel_1 : std_logic_vector(3 downto 0);
+    signal Reg_sel_0,Reg_sel_1 : std_logic_vector(2 downto 0);
     
     signal Register_enable : std_logic_vector(2 downto 0);
 
@@ -235,7 +235,7 @@ BEGIN
 
     instruction_dec : Instruction_Decoder
     PORT MAP(
-        INS => Current_Instruction,
+        INS => Instruction_bus,
         Jump_check => Number01,
         Reg_enable => Register_enable,
         Reg_select_0 => Reg_sel_0,
