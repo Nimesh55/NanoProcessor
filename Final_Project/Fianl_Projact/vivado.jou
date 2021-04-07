@@ -40,3 +40,4 @@ update_compile_order -fileset sources_1
 close_sim
 launch_simulation
 source NanoProcessor_sim.tcl
+close_sim
