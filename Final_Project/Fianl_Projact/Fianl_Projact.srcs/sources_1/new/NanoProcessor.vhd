@@ -274,7 +274,7 @@ BEGIN
     );
 
     Display_7_segment : LUT_16_7 PORT MAP(
-        address => Calculate_value,
+        address => AddSubTotal,
         data => SD_7_display
     );
 
