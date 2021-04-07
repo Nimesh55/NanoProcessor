@@ -1,2 +1,4 @@
-INFO: [VRFC 10-163] Analyzing VHDL file "D:/Moodle/Computer Architecture/Labs/NanoProcessor final/NanoProcessor final.srcs/sim_1/imports/new/Counter_Sim.vhd" into library xil_defaultlib
-INFO: [VRFC 10-307] analyzing entity Counter_Sim
+INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/User/Documents/GitHub/NanoProcessor/NanoProcessor final/NanoProcessor final.srcs/sources_1/new/NanoProcessor.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity NanoProcessor
+INFO: [VRFC 10-163] Analyzing VHDL file "C:/Users/User/Documents/GitHub/NanoProcessor/NanoProcessor final/NanoProcessor final.srcs/sim_1/new/NanoProcessor_sim.vhd" into library xil_defaultlib
+INFO: [VRFC 10-307] analyzing entity NanoProcessor_sim

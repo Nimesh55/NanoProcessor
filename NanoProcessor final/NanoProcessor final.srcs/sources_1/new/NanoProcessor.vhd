@@ -5,6 +5,7 @@ ENTITY NanoProcessor IS
     PORT (
         Reset : IN STD_LOGIC;
         Clk : IN STD_LOGIC;
+        Enable:in std_logic;
         Zero_Flag : OUT STD_LOGIC;
         Overflow_Flag : OUT STD_LOGIC;
         Carry_Flag : OUT STD_LOGIC;
@@ -37,8 +38,8 @@ ARCHITECTURE Behavioral OF NanoProcessor IS
     COMPONENT Counter
         PORT (
             Next_Ins : IN STD_LOGIC_VECTOR(2 DOWNTO 0) := "000"; --Next INstruction
-            Res : IN STD_LOGIC := '1'; --Reset
-            Clk : IN STD_LOGIC := '1'; --Clock
+            Res : IN STD_LOGIC; --Reset
+            Clk : IN STD_LOGIC; --Clock
             Current_Ins : OUT STD_LOGIC_VECTOR(2 DOWNTO 0)); -- Current Instruction
     END COMPONENT;
 
@@ -51,8 +52,8 @@ ARCHITECTURE Behavioral OF NanoProcessor IS
 
     COMPONENT MUX_2_way_4_bit
         PORT (
-            AddSubValue : IN STD_LOGIC_VECTOR (3 DOWNTO 0) := "0000";
-            InsDecValue : IN STD_LOGIC_VECTOR (3 DOWNTO 0) := "0000";
+            AddSubValue : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
+            InsDecValue : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
             OutputValue : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
             Selector : IN STD_LOGIC := '0' --'0' for addsub and '1' for insdec
         );
@@ -92,7 +93,7 @@ ARCHITECTURE Behavioral OF NanoProcessor IS
     COMPONENT Instruction_Decoder
         PORT (
             INS : IN STD_LOGIC_VECTOR (11 DOWNTO 0); --Instruction
-            Jump_check : in STD_LOGIC_VECTOR(3 downto 0); --Register check for jump
+            Jump_check : IN STD_LOGIC_VECTOR(3 DOWNTO 0); --Register check for jump
             Reg_enable : OUT STD_LOGIC_VECTOR (2 DOWNTO 0); --Register enable
             Reg_select_0 : OUT STD_LOGIC_VECTOR (2 DOWNTO 0); --Register select one
             Reg_select_1 : OUT STD_LOGIC_VECTOR (2 DOWNTO 0); --Register select two
@@ -134,32 +135,37 @@ ARCHITECTURE Behavioral OF NanoProcessor IS
             Negative : OUT STD_LOGIC --Negative flag
         );
     END COMPONENT;
+    COMPONENT LUT_16_7
+        PORT (
+            address : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
+            data : OUT STD_LOGIC_VECTOR (6 DOWNTO 0));
+    END COMPONENT;
 
     SIGNAL Number01, Number02 : STD_LOGIC_VECTOR (3 DOWNTO 0);
-    Signal AddSubTotal :  STD_LOGIC_VECTOR (3 DOWNTO 0) := "0000";
+    SIGNAL AddSubTotal : STD_LOGIC_VECTOR (3 DOWNTO 0) := "0000";
 
-    SIGNAL Adder_3_value : STD_LOGIC_vector(2 downto 0);
+    SIGNAL Adder_3_value : STD_LOGIC_VECTOR(2 DOWNTO 0);
 
     SIGNAL Jump_flag_sel : STD_LOGIC;
-    signal Address_to_jump : std_logic_vector(2 downto 0);
+    SIGNAL Address_to_jump : STD_LOGIC_VECTOR(2 DOWNTO 0);
 
---    SIGNAL Next_ins : STD_LOGIC_VECTOR(2 DOWNTO 0);
-    signal Enable,Res :std_logic;
+    --    SIGNAL Next_ins : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAL Res : STD_LOGIC;
 
     SIGNAL Next_instruction : STD_LOGIC_VECTOR(2 DOWNTO 0);
     SIGNAL Current_Instruction : STD_LOGIC_VECTOR(2 DOWNTO 0) := "000";
 
     SIGNAL Instruction_bus : STD_LOGIC_VECTOR(11 DOWNTO 0);
 
-    SIGNAL  Load_sel, Add_Sub_sel : STD_LOGIC;
-    signal Reg_sel_0,Reg_sel_1 : std_logic_vector(2 downto 0);
-    
-    signal Register_enable : std_logic_vector(2 downto 0);
+    SIGNAL Load_sel, Add_Sub_sel : STD_LOGIC;
+    SIGNAL Reg_sel_0, Reg_sel_1 : STD_LOGIC_VECTOR(2 DOWNTO 0);
 
-    SIGNAL Register_receiving_value, Imediate_value : STD_LOGIC_vector(3 downto 0);
+    SIGNAL Register_enable : STD_LOGIC_VECTOR(2 DOWNTO 0);
 
-    SIGNAL R0_value,R1_value, R2_value, R3_value, R4_value, R5_value, R6_value, R7_value : STD_LOGIC_VECTOR(3 DOWNTO 0);
-    
+    SIGNAL Register_receiving_value, Imediate_value : STD_LOGIC_VECTOR(3 DOWNTO 0);
+
+    SIGNAL R0_value, R1_value, R2_value, R3_value, R4_value, R5_value, R6_value, R7_value : STD_LOGIC_VECTOR(3 DOWNTO 0);
+
     SIGNAL Clk_out : STD_LOGIC;
 BEGIN
 
@@ -222,7 +228,7 @@ BEGIN
         I => Register_enable,
         Clk => Clk_out,
         Enable => Enable,
-        Res => Res,
+        Res => Reset,
         R0 => R0_value,
         R1 => R1_value,
         R2 => R2_value,
@@ -264,7 +270,7 @@ BEGIN
     programme_counter : Counter
     PORT MAP(
         Next_Ins => Next_instruction,
-        Res => Res,
+        Res => Reset,
         Clk => Clk_out,
         Current_Ins => Current_Instruction
     );
@@ -274,6 +280,10 @@ BEGIN
         Memory_select => Current_Instruction,
         Instruction => Instruction_bus
     );
+    Display_7_segment : LUT_16_7 
+    PORT MAP(
+        address => AddSubTotal,
+        data => SD_7_display);
 
     Reg0 <= R0_value;
     Reg1 <= R1_value;
