@@ -1,70 +1,68 @@
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
 
-entity Counter is
-    Port ( 
-            Next_Ins : in std_logic_vector(2 downto 0); --Next INstruction
-            Res : in STD_LOGIC; --Reset
-            Clk : in STD_LOGIC; --Clock
-            Current_Ins : out std_logic_vector(2 downto 0)); -- Current Instruction
-end Counter;
+ENTITY Counter IS
+    PORT (
+        Next_Ins : IN STD_LOGIC_VECTOR(2 DOWNTO 0); --Next INstruction
+        Res : IN STD_LOGIC; --Reset
+        Clk : IN STD_LOGIC; --Clock
+        Current_Ins : OUT STD_LOGIC_VECTOR(2 DOWNTO 0)); -- Current Instruction
+END Counter;
 
-architecture Behavioral of Counter is
+ARCHITECTURE Behavioral OF Counter IS
 
     -- Add D Flip Flops to the Program counter
     -- Implemented using previous Lab
-    component D_FF
-        port(
-        D : in std_logic;
-        Res:in std_logic;
-        Clk:in std_logic;
-        Q : out std_logic;
-        Qbar : out std_logic  
+    COMPONENT D_FF
+        PORT (
+            D : IN STD_LOGIC;
+            Res : IN STD_LOGIC;
+            Clk : IN STD_LOGIC;
+            Q : OUT STD_LOGIC;
+            Qbar : OUT STD_LOGIC
         );
-    end component;
+    END COMPONENT;
 
     -- Add Slow Clock to the program counter
     -- Implemented using previous Lab
-    component Slow_Clock
-        port(
-            Clk_In : in std_logic;
-            Clk_Out : out std_logic
-            );
-    end component;
+    COMPONENT Slow_Clock
+        PORT (
+            Clk_In : IN STD_LOGIC;
+            Clk_Out : OUT STD_LOGIC
+        );
+    END COMPONENT;
 
-    signal D0,D1,D2 : std_logic;
-    signal Clk_slow:std_logic;
+    SIGNAL D0, D1, D2 : STD_LOGIC;
+    SIGNAL Clk_slow : STD_LOGIC;
 
-begin
+BEGIN
     Slow_clock0 : Slow_Clock --Slow Clock
-    port map(
-        Clk_In=>Clk,
-        Clk_Out=>Clk_slow
+    PORT MAP(
+        Clk_In => Clk,
+        Clk_Out => Clk_slow
     );
 
-    D_FF0: D_FF --First D-Flip Flop
-    port map(
-        D=>Next_Ins(0),
-        Res=>Res,
-        Clk=>Clk_slow,
-        Q=>Current_Ins(0)
+    D_FF0 : D_FF --First D-Flip Flop
+    PORT MAP(
+        D => Next_Ins(0),
+        Res => Res,
+        Clk => Clk_slow,
+        Q => Current_Ins(0)
     );
 
-    D_FF1: D_FF --Second D-Flip Flop
-    port map(
-        D=>Next_Ins(1),
-        Res=>Res,
-        Clk=>Clk_slow,
-        Q=>Current_Ins(1)
+    D_FF1 : D_FF --Second D-Flip Flop
+    PORT MAP(
+        D => Next_Ins(1),
+        Res => Res,
+        Clk => Clk_slow,
+        Q => Current_Ins(1)
     );
 
-    D_FF2: D_FF --Third D-Flip Flop
-    port map(
-        D=>Next_Ins(2),
-        Res=>Res,
-        Clk=>Clk_slow,
-        Q=>Current_Ins(2)
+    D_FF2 : D_FF --Third D-Flip Flop
+    PORT MAP(
+        D => Next_Ins(2),
+        Res => Res,
+        Clk => Clk_slow,
+        Q => Current_Ins(2)
     );
-
-
-end Behavioral;
+END Behavioral;
