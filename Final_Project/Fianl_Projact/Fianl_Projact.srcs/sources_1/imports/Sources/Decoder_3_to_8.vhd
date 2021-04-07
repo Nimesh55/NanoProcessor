@@ -12,7 +12,7 @@ architecture Behavioral of Decoder_3_to_8 is
 component Decoder_2_to_4
     port (
     I: in std_logic_vector(1 downto 0);
-    EN: in std_logic;
+    Enable: in std_logic;
     Y: out std_logic_vector(3 downto 0));
 end component;
 
@@ -24,12 +24,12 @@ begin
 Decoder_2_to_4_0 : Decoder_2_to_4
     port map (
     I(1 downto 0) => I(1 downto 0),
-    EN => EN,
+    Enable => EN,
     Y(3 downto 0) => Y0(3 downto 0));
 Decoder_2_to_4_1 : Decoder_2_to_4
     port map (
     I(1 downto 0) => I(1 downto 0),
-    EN => EN,
+    Enable => EN,
     Y(3 downto 0) => Y1(3 downto 0));
     
 Y(0) <= Y0(0) AND (NOT I(2));
