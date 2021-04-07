@@ -13,7 +13,7 @@ begin
     process(Clk_In) begin
         if (rising_edge(Clk_In)) then
             count<=count+1;
-            if(count=1) then
+            if(count=5) then
                 clk_status<=not clk_status;
                 Clk_Out<=clk_status;
                 count<=1;
