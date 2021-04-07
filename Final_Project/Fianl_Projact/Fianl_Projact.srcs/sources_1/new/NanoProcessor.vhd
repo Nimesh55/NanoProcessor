@@ -133,6 +133,12 @@ ARCHITECTURE Behavioral OF NanoProcessor IS
         );
     END COMPONENT;
 
+    COMPONENT LUT_16_7
+        PORT (
+            address : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
+            data : OUT STD_LOGIC_VECTOR (6 DOWNTO 0));
+    END COMPONENT;
+
     SIGNAL Number01, Number02 : STD_LOGIC_VECTOR (3 DOWNTO 0);
     SIGNAL AddSubTotal : STD_LOGIC_VECTOR (3 DOWNTO 0) := "0000";
 
@@ -267,6 +273,11 @@ BEGIN
         Instruction => Instruction_bus
     );
 
+    Display_7_segment : LUT_16_7 PORT MAP(
+        address => Calculate_value,
+        data => SD_7_display
+    );
+
     Reg0 <= R0_value;
     Reg1 <= R1_value;
     Reg2 <= R2_value;
@@ -280,5 +291,5 @@ BEGIN
     jmp_flag <= Jump_flag_sel;
     instructions <= Instruction_bus;
     Instruction_next <= Next_instruction;
-    
+
 END Behavioral;

@@ -68,14 +68,14 @@ BEGIN
         WAIT FOR clock_period/2;
     END PROCESS;
 
-    sim:process
-        begin
-            
-            Reset<='1';
-            wait for 100ns;
-            
-            Reset<='0';
-            wait;
-        end process;
-            
+    sim : PROCESS
+    BEGIN
+
+        Reset <= '1';
+        WAIT FOR 100ns;
+
+        Reset <= '0';
+        WAIT;
+    END PROCESS;
+
 END Behavioral;
