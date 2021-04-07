@@ -8,13 +8,15 @@ ENTITY Add_Sub_unit IS
         SS : OUT STD_LOGIC_VECTOR (3 DOWNTO 0); --get result on this
         Sel : IN STD_LOGIC; --Select add or substract using this
         Zero : OUT STD_LOGIC; -- Zero flag
-        Overflow : INOUT STD_LOGIC; --Overflow flag
+        Overflow : OUT STD_LOGIC; --Overflow flag
         Carry : OUT STD_LOGIC; -- carry flag
         Negative : OUT STD_LOGIC --Negative flag
     );
 END Add_Sub_unit;
 
 ARCHITECTURE Behavioral OF Add_Sub_unit IS
+
+    -- Implemented using the Full Adder which created in Lab 3
     COMPONENT FA --defining full adder circuit with its ports
         PORT (
             A : IN STD_LOGIC;
@@ -25,9 +27,12 @@ ARCHITECTURE Behavioral OF Add_Sub_unit IS
     END COMPONENT;
 
     SIGNAL FA0_C, FA1_C, FA2_C, FA3_C : STD_LOGIC;
-    SIGNAL BBU : STD_LOGIC_VECTOR(3 DOWNTO 0); --These are used to keep values for use in logical operations
+
+    --These are used to keep values for use in logical operations
+    SIGNAL BBU : STD_LOGIC_VECTOR(3 DOWNTO 0);
     SIGNAL SSU : STD_LOGIC_VECTOR(3 DOWNTO 0);
     SIGNAL C : STD_LOGIC; -- used to keep final value of C_out
+    SIGNAL Overflow_flag : STD_LOGIC; -- used to keep overflow flag value
 
 BEGIN
     FA_0 : FA --full adder 01
@@ -62,17 +67,21 @@ BEGIN
         S => SSU(3),
         C_Out => C);
 
+    -- If SEL = 1, we have B XOR 1 = B and C_out = 1 == perform as a subtractor
+    -- If SEL = 0, we have B XOR 1 = Not(B) and C_in = 0  == perform as an adder
+
     BBU(0) <= Sel XOR BB(0);
     BBU(1) <= Sel XOR BB(1);
     BBU(2) <= Sel XOR BB(2);
     BBU(3) <= Sel XOR BB(3);
-    SS <= SSU;
-    
-    Overflow <= ((AA(3) AND BBU(3) AND NOT(SSU(3))) OR (NOT(AA(3)) AND NOT(BBU(3)) AND SSU(3))); 
+
+    SS <= SSU;--outputs
+
     --This get only overflow, not sign in minus numbers
-    
+    Overflow_flag <= ((AA(3) AND BBU(3) AND NOT(SSU(3))) OR (NOT(AA(3)) AND NOT(BBU(3)) AND SSU(3)));
+    Overflow <= Overflow_flag;
     Zero <= NOT(SSU(0) OR SSU(1) OR SSU(2) OR SSU(3) OR C); --This is the zero flag
-    Negative <= SSU(3) AND NOT(Overflow); -- This is the negative flag
+    Negative <= SSU(3) AND NOT(Overflow_flag); -- This is the negative flag
     Carry <= C; --This is the carry flag
 
 END Behavioral;
