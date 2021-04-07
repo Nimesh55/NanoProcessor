@@ -4,8 +4,8 @@ USE IEEE.STD_LOGIC_1164.ALL;
 
 ENTITY RegisterBank IS
     PORT (
-        Clk : IN STD_LOGIC;                     --Cloak
-        Res : IN STD_LOGIC;                     --Reset
+        Clk : IN STD_LOGIC; --Cloak
+        Res : IN STD_LOGIC; --Reset
         R0 : OUT STD_LOGIC_VECTOR (3 DOWNTO 0); --Register 1
         R1 : OUT STD_LOGIC_VECTOR (3 DOWNTO 0); --Register 2
         R2 : OUT STD_LOGIC_VECTOR (3 DOWNTO 0); --Register 3
@@ -14,8 +14,8 @@ ENTITY RegisterBank IS
         R5 : OUT STD_LOGIC_VECTOR (3 DOWNTO 0); --Register 6
         R6 : OUT STD_LOGIC_VECTOR (3 DOWNTO 0); --Register 7
         R7 : OUT STD_LOGIC_VECTOR (3 DOWNTO 0); --Register 8
-        D : IN STD_LOGIC_VECTOR (3 DOWNTO 0);   --Data bus
-        X : IN STD_LOGIC_VECTOR (2 DOWNTO 0));  --Instruction
+        D : IN STD_LOGIC_VECTOR (3 DOWNTO 0); --Data bus
+        X : IN STD_LOGIC_VECTOR (2 DOWNTO 0)); --Instruction
 
 END RegisterBank;
 

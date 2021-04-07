@@ -3,37 +3,37 @@ USE IEEE.STD_LOGIC_1164.ALL;
 
 ENTITY NanoProcessor IS
     PORT (
-        Reset : IN STD_LOGIC;
-        Clk : IN STD_LOGIC;
-        Zero_Flag : OUT STD_LOGIC;
-        Overflow_Flag : OUT STD_LOGIC;
-        Carry_Flag : OUT STD_LOGIC;
-        Negative_Flag : OUT STD_LOGIC;
-        Reg0 : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
-        Reg1 : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
-        Reg2 : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
-        Reg3 : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
-        Reg4 : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
-        Reg5 : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
-        Reg6 : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
-        Reg7 : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
-        Num1 : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
-        Num2 : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
-        Instruction_next : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
-        jmp_flag : OUT STD_LOGIC;
-        instructions : OUT STD_LOGIC_VECTOR(11 DOWNTO 0);
-        SD_7_display : OUT STD_LOGIC_VECTOR(6 DOWNTO 0));
+        Reset : IN STD_LOGIC;                               --Reset
+        Clk : IN STD_LOGIC;                                 --Clock
+        Zero_Flag : OUT STD_LOGIC;                          --Zero Flag
+        Overflow_Flag : OUT STD_LOGIC;                      --Overflow flag
+        Carry_Flag : OUT STD_LOGIC;                         --Carry flag
+        Negative_Flag : OUT STD_LOGIC;                      --Negative Flag
+        Reg0 : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);            --Register 1
+        Reg1 : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);            --Register 2
+        Reg2 : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);            --Register 3
+        Reg3 : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);            --Register 4
+        Reg4 : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);            --Register 5
+        Reg5 : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);            --Register 6
+        Reg6 : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);            --Register 7
+        Reg7 : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);            --Register 8
+        Num1 : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);            --First Number
+        Num2 : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);            --Second Number
+        Instruction_next : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);--Next Instruction address
+        jmp_flag : OUT STD_LOGIC;                           --Jump flag
+        instructions : OUT STD_LOGIC_VECTOR(11 DOWNTO 0);   --Instructions
+        SD_7_display : OUT STD_LOGIC_VECTOR(6 DOWNTO 0));   --7 segment display
 END NanoProcessor;
 
 ARCHITECTURE Behavioral OF NanoProcessor IS
 
-    COMPONENT Slow_Clock
+    COMPONENT Slow_Clock --Slow clock
         PORT (
             Clk_in : IN STD_LOGIC;
             Clk_out : OUT STD_LOGIC);
     END COMPONENT;
 
-    COMPONENT Counter
+    COMPONENT Counter --Counter
         PORT (
             Next_Ins : IN STD_LOGIC_VECTOR(2 DOWNTO 0) := "000"; --Next INstruction
             Res : IN STD_LOGIC; --Reset
@@ -41,14 +41,14 @@ ARCHITECTURE Behavioral OF NanoProcessor IS
             Current_Ins : OUT STD_LOGIC_VECTOR(2 DOWNTO 0)); -- Current Instruction
     END COMPONENT;
 
-    COMPONENT Adder_3_bit
+    COMPONENT Adder_3_bit --3 bit adder
         PORT (
             AA : IN STD_LOGIC_VECTOR (2 DOWNTO 0); --first number
             SS : OUT STD_LOGIC_VECTOR (2 DOWNTO 0) --get result on this
         );
     END COMPONENT;
 
-    COMPONENT MUX_2_way_4_bit
+    COMPONENT MUX_2_way_4_bit --2 way 4 bit multiplexer
         PORT (
             AddSubValue : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
             InsDecValue : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
@@ -57,7 +57,7 @@ ARCHITECTURE Behavioral OF NanoProcessor IS
         );
     END COMPONENT;
 
-    COMPONENT MUX_2_way_3_bit
+    COMPONENT MUX_2_way_3_bit --2 way 3 bit multiplexer
         PORT (
             Adder_3 : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
             JUMP_TO : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
@@ -66,7 +66,7 @@ ARCHITECTURE Behavioral OF NanoProcessor IS
         );
     END COMPONENT;
 
-    COMPONENT MUX_8_way_4_bit
+    COMPONENT MUX_8_way_4_bit --8 way 4 bit multiplexer
         PORT (
             Reg0 : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
             Reg1 : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
@@ -81,14 +81,14 @@ ARCHITECTURE Behavioral OF NanoProcessor IS
         );
     END COMPONENT;
 
-    COMPONENT ProgramRom
+    COMPONENT ProgramRom --program ROM
         PORT (
             Memory_select : IN STD_LOGIC_VECTOR (2 DOWNTO 0); -- Memory selection 
             Instruction : OUT STD_LOGIC_VECTOR (11 DOWNTO 0) -- Instruction
         );
     END COMPONENT;
 
-    COMPONENT Instruction_Decoder
+    COMPONENT Instruction_Decoder --Instruction Decoder
         PORT (
             INS : IN STD_LOGIC_VECTOR (11 DOWNTO 0); --Instruction
             Jump_check : IN STD_LOGIC_VECTOR(3 DOWNTO 0); --Register check for jump
@@ -103,7 +103,7 @@ ARCHITECTURE Behavioral OF NanoProcessor IS
         );
     END COMPONENT;
 
-    COMPONENT RegisterBank
+    COMPONENT RegisterBank --Register Bank
         PORT (
             Clk : IN STD_LOGIC; --Cloak
             Res : IN STD_LOGIC; --Reset
@@ -120,7 +120,7 @@ ARCHITECTURE Behavioral OF NanoProcessor IS
         );
     END COMPONENT;
 
-    COMPONENT Add_Sub_unit
+    COMPONENT Add_Sub_unit --Add/Sub unit
         PORT (
             AA : IN STD_LOGIC_VECTOR (3 DOWNTO 0); --first number
             BB : IN STD_LOGIC_VECTOR (3 DOWNTO 0); --second number
@@ -133,7 +133,7 @@ ARCHITECTURE Behavioral OF NanoProcessor IS
         );
     END COMPONENT;
 
-    COMPONENT LUT_16_7
+    COMPONENT LUT_16_7 -- Look up table which we designed in lab 7(7 segment display)
         PORT (
             address : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
             data : OUT STD_LOGIC_VECTOR (6 DOWNTO 0));
@@ -166,11 +166,11 @@ ARCHITECTURE Behavioral OF NanoProcessor IS
     SIGNAL Clk_out : STD_LOGIC;
 
 BEGIN
-    clock : Slow_Clock
+    clock : Slow_Clock --slow clock
     PORT MAP(
         Clk_in => Clk,
         Clk_out => Clk_out);
-    Number_01 : MUX_8_way_4_bit
+    Number_01 : MUX_8_way_4_bit --first 8 way 4 bit multiplexer
     PORT MAP(
         Reg0 => R0_value,
         Reg1 => R1_value,
@@ -184,7 +184,7 @@ BEGIN
         RegSelection => Reg_sel_0
     );
 
-    Number_02 : MUX_8_way_4_bit
+    Number_02 : MUX_8_way_4_bit--second 8 way 4 bit multiplexer
     PORT MAP(
         Reg0 => R0_value,
         Reg1 => R1_value,
@@ -198,7 +198,7 @@ BEGIN
         RegSelection => Reg_sel_1
     );
 
-    add_sub : Add_Sub_unit
+    add_sub : Add_Sub_unit --add sub unit
     PORT MAP(
         AA => Number02, --value in second MUX
         BB => Number01, --value in first MUX
@@ -209,14 +209,14 @@ BEGIN
         Carry => Carry_Flag,
         Negative => Negative_Flag
     );
-    MUX_2_way_4 : MUX_2_way_4_bit
+    MUX_2_way_4 : MUX_2_way_4_bit ----2 way 4 bit multiplexer
     PORT MAP(
         AddSubValue => AddSubTotal,
         InsDecValue => Imediate_value,
         OutputValue => Register_receiving_value,
         Selector => Load_sel
     );
-    register_bank : RegisterBank
+    register_bank : RegisterBank --register bank
     PORT MAP(
         Clk => Clk_out,
         Res => Reset,
@@ -231,7 +231,7 @@ BEGIN
         D => Register_receiving_value,
         X => Register_enable
     );
-    instruction_dec : Instruction_Decoder
+    instruction_dec : Instruction_Decoder --instruction decoder
     PORT MAP(
         INS => Instruction_bus,
         Jump_check => Number01,
@@ -245,13 +245,13 @@ BEGIN
         Jump_address => Address_to_jump
     );
 
-    adder : Adder_3_bit
+    adder : Adder_3_bit --adder 3 bit
     PORT MAP(
         AA => Current_Instruction,
         SS => Adder_3_value
     );
 
-    MUX_2_way_3 : MUX_2_way_3_bit
+    MUX_2_way_3 : MUX_2_way_3_bit--2 way 3 bit multiplexer
     PORT MAP(
         Adder_3 => Adder_3_value,
         JUMP_TO => Address_to_jump,
@@ -259,7 +259,7 @@ BEGIN
         Output => Next_instruction
     );
 
-    programme_counter : Counter
+    programme_counter : Counter --program counter
     PORT MAP(
         Next_Ins => Next_instruction,
         Res => Reset,
@@ -267,17 +267,18 @@ BEGIN
         Current_Ins => Current_Instruction
     );
 
-    prom : ProgramRom
+    prom : ProgramRom --program rom
     PORT MAP(
         Memory_select => Current_Instruction,
         Instruction => Instruction_bus
     );
 
-    Display_7_segment : LUT_16_7 PORT MAP(
+    Display_7_segment : LUT_16_7 PORT MAP( --7 segment display
         address => AddSubTotal,
         data => SD_7_display
     );
-
+    
+    --selection proper port to each register
     Reg0 <= R0_value;
     Reg1 <= R1_value;
     Reg2 <= R2_value;
