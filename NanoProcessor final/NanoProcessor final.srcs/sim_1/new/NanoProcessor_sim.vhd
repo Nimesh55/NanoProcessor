@@ -75,7 +75,7 @@ BEGIN
             Enable<='1';
             Reset<='1';
             wait for 100ns;
-
+            Enable<='1';
             Reset<='0';
             wait;
         end process;

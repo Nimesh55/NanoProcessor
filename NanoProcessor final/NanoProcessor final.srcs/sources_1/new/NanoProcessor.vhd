@@ -37,7 +37,7 @@ ARCHITECTURE Behavioral OF NanoProcessor IS
 
     COMPONENT Counter
         PORT (
-            Next_Ins : IN STD_LOGIC_VECTOR(2 DOWNTO 0) := "000"; --Next INstruction
+            Next_Ins : IN STD_LOGIC_VECTOR(2 DOWNTO 0) :="000"; --Next INstruction
             Res : IN STD_LOGIC; --Reset
             Clk : IN STD_LOGIC; --Clock
             Current_Ins : OUT STD_LOGIC_VECTOR(2 DOWNTO 0)); -- Current Instruction
@@ -55,7 +55,7 @@ ARCHITECTURE Behavioral OF NanoProcessor IS
             AddSubValue : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
             InsDecValue : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
             OutputValue : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
-            Selector : IN STD_LOGIC := '0' --'0' for addsub and '1' for insdec
+            Selector : IN STD_LOGIC --'0' for addsub and '1' for insdec
         );
     END COMPONENT;
 
@@ -149,7 +149,6 @@ ARCHITECTURE Behavioral OF NanoProcessor IS
     SIGNAL Jump_flag_sel : STD_LOGIC;
     SIGNAL Address_to_jump : STD_LOGIC_VECTOR(2 DOWNTO 0);
 
-    --    SIGNAL Next_ins : STD_LOGIC_VECTOR(2 DOWNTO 0);
     SIGNAL Res : STD_LOGIC;
 
     SIGNAL Next_instruction : STD_LOGIC_VECTOR(2 DOWNTO 0);
@@ -204,8 +203,8 @@ BEGIN
 
     add_sub : Add_Sub_unit
     PORT MAP(
-        AA => Number01, --value in first MUX
-        BB => Number02, --value in second MUX
+        AA => Number02, --value in first MUX
+        BB => Number01, --value in second MUX
         SS => AddSubTotal,
         Sel => Add_Sub_sel,
         Zero => Zero_Flag,
