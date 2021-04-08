@@ -1,30 +1,35 @@
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
 
-entity MUX_2_way_4_bit is
-    Port ( AddSubValue : in STD_LOGIC_VECTOR (3 downto 0);
-           InsDecValue : in STD_LOGIC_VECTOR (3 downto 0);
-           OutputValue : out STD_LOGIC_VECTOR (3 downto 0);
-           Selector : in STD_LOGIC);--'0' for addsub and '1' for insdec
-end MUX_2_way_4_bit;
+ENTITY MUX_2_way_4_bit IS
+    PORT (
+        AddSubValue : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
+        InsDecValue : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
+        OutputValue : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
+        --'0' to select add/sub unit value and '1' to select instruction decoder immediate value
+        Selector : IN STD_LOGIC);
+END MUX_2_way_4_bit;
 
-architecture Behavioral of MUX_2_way_4_bit is
-component tri_state_buffer
-    port (  inputTri : in STD_LOGIC_VECTOR (3 downto 0);
-           outputTri : out STD_LOGIC_VECTOR (3 downto 0);
-           EN : in STD_LOGIC);
-end component; 
-signal NOTSel: std_logic;   
-begin
-tri_state_buffer_0:tri_state_buffer
-port map(   inputTri=> AddSubValue,
-            outputTri => OutputValue,
-            EN=> NOTSel);
-tri_state_buffer_1: tri_state_buffer
-port map(   inputTri=> InsDecValue,
-            outputTri =>OutputValue,
-            EN=>Selector);
+ARCHITECTURE Behavioral OF MUX_2_way_4_bit IS
+    COMPONENT tri_state_buffer
+        PORT (
+            inputTri : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
+            outputTri : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
+            EN : IN STD_LOGIC);
+    END COMPONENT;
+    SIGNAL NOTSel : STD_LOGIC;
+BEGIN
+    tri_state_buffer_0 : tri_state_buffer
+    PORT MAP(
+        inputTri => AddSubValue,
+        outputTri => OutputValue,
+        EN => NOTSel);
+    tri_state_buffer_1 : tri_state_buffer
+    PORT MAP(
+        inputTri => InsDecValue,
+        outputTri => OutputValue,
+        EN => Selector);
 
-NOTSel <= NOT Selector;
+    NOTSel <= NOT Selector;
 
-end Behavioral;
+END Behavioral;
