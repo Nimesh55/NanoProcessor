@@ -17,7 +17,7 @@ architecture Behavioral of Counter_Sim is
     signal Res, Clk : std_logic;
     signal Next_Ins : std_logic_vector(2 downto 0);
     signal Current_Ins : std_logic_vector(2 downto 0);
-    constant clock_period : time := 10ns; --setting a clock period
+    constant clock_period : time := 100ns; --setting a clock period
 
 begin
     UUT:Counter port map(

@@ -20,6 +20,7 @@ ENTITY NanoProcessor IS
         Num1 : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);            --First Number
         Num2 : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);            --Second Number
         Instruction_next : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);--Next Instruction address
+        Instruction_Current: OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
         jmp_flag : OUT STD_LOGIC;                           --Jump flag
         instructions : OUT STD_LOGIC_VECTOR(11 DOWNTO 0);   --Instructions
         SD_7_display : OUT STD_LOGIC_VECTOR(6 DOWNTO 0));   --7 segment display
@@ -62,7 +63,7 @@ ARCHITECTURE Behavioral OF NanoProcessor IS
             Adder_3 : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
             JUMP_TO : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
             Selector : IN STD_LOGIC;
-            Output : OUT STD_LOGIC_VECTOR(2 DOWNTO 0)
+            Out_put : OUT STD_LOGIC_VECTOR(2 DOWNTO 0)
         );
     END COMPONENT;
 
@@ -256,7 +257,7 @@ BEGIN
         Adder_3 => Adder_3_value,
         JUMP_TO => Address_to_jump,
         Selector => Jump_flag_sel,
-        Output => Next_instruction
+        Out_put => Next_instruction
     );
 
     programme_counter : Counter --program counter
@@ -292,5 +293,5 @@ BEGIN
     jmp_flag <= Jump_flag_sel;
     instructions <= Instruction_bus;
     Instruction_next <= Next_instruction;
-
+    Instruction_Current<=Current_Instruction;
 END Behavioral;

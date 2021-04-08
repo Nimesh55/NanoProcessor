@@ -8,18 +8,18 @@ architecture Behavioral of MUX_2_way_3_bit_sim is
 component MUX_2_way_3_bit
     port(   Adder_3 : in STD_LOGIC_VECTOR (2 downto 0);
             JUMP_TO : in STD_LOGIC_VECTOR (2 downto 0);
-            Output : out STD_LOGIC_VECTOR (2 downto 0);
+            Out_put : out STD_LOGIC_VECTOR (2 downto 0);
             Selector : in STD_LOGIC);
 end component;
 signal Adder_3,JUMP_TO : std_logic_vector(2 downto 0);
 signal Selector : std_logic;
-signal Output : std_logic_vector(2 downto 0);
+signal Out_put : std_logic_vector(2 downto 0);
 begin
 UUT: MUX_2_way_3_bit
 port map(
             Adder_3(2 downto 0)=>Adder_3(2 downto 0),
             JUMP_TO(2 downto 0)=>JUMP_TO(2 downto 0),
-            Output=> Output,
+            Out_put=> Out_put,
             Selector=> Selector);
 process
 begin

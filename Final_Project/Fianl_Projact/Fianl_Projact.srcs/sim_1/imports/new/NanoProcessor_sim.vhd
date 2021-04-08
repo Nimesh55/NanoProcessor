@@ -26,6 +26,7 @@ ARCHITECTURE Behavioral OF NanoProcessor_sim IS
             Num1 : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
             Num2 : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
             Instruction_next : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
+            Instruction_Current: OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
             instructions : OUT STD_LOGIC_VECTOR(11 DOWNTO 0);
             SD_7_display : OUT STD_LOGIC_VECTOR(6 DOWNTO 0));
 
@@ -33,10 +34,10 @@ ARCHITECTURE Behavioral OF NanoProcessor_sim IS
 
     SIGNAL Reset, Clk, jmp_flag, Negative_Flag, Carry_Flag, Overflow_Flag, Zero_Flag : STD_LOGIC;
     SIGNAL Num2, Num1, Reg7, Reg6, Reg5, Reg4, Reg3, Reg2, Reg1, Reg0 : STD_LOGIC_VECTOR(3 DOWNTO 0);
-    SIGNAL Instruction_next : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAL Instruction_next,Instruction_Current : STD_LOGIC_VECTOR(2 DOWNTO 0);
     SIGNAL instructions : STD_LOGIC_VECTOR(11 DOWNTO 0);
     SIGNAL SD_7_display : STD_LOGIC_VECTOR(6 DOWNTO 0);
-    CONSTANT clock_period : TIME := 1ns;
+    CONSTANT clock_period : TIME := 10ns;
 BEGIN
     uut : NanoProcessor PORT MAP(
         Reset => Reset,
@@ -57,6 +58,7 @@ BEGIN
         Num1 => Num1,
         Num2 => Num2,
         Instruction_next => Instruction_next,
+        Instruction_Current=>Instruction_Current,
         instructions => instructions,
         SD_7_display => SD_7_display
     );

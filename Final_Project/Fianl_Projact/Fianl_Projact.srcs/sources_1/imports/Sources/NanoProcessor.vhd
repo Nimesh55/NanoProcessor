@@ -20,6 +20,7 @@ ENTITY NanoProcessor IS
         Num1 : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
         Num2 : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
         Instruction_next : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
+        Instruction_Current: OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
         jmp_flag : OUT STD_LOGIC;
         instructions : OUT STD_LOGIC_VECTOR(11 DOWNTO 0);
         SD_7_display : OUT STD_LOGIC_VECTOR(6 DOWNTO 0));
@@ -288,4 +289,5 @@ BEGIN
     jmp_flag <= Jump_flag_sel;
     instructions <= Instruction_bus;
     Instruction_next <= Next_instruction;
+    Instruction_Current<=Current_Instruction;
 END Behavioral;
