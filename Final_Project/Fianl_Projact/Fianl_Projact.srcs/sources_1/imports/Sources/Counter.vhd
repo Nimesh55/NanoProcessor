@@ -32,7 +32,7 @@ ARCHITECTURE Behavioral OF Counter IS
     --            );
     --    end component;
 
-    SIGNAL D0, D1, D2 : STD_LOGIC;
+--    SIGNAL D0, D1, D2 : STD_LOGIC;
     --    signal Clk_slow:std_logic;
 
 BEGIN

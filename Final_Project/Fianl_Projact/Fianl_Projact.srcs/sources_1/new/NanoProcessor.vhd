@@ -21,9 +21,18 @@ ENTITY NanoProcessor IS
         Num2 : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);            --Second Number
         Instruction_next : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);--Next Instruction address
         Instruction_Current: OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
+        ---------------------------
+        Address_to_jump_check : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
+        Adder_3_value_check : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
+        Register_receiving_value_check : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
+        AddSubTotal_check : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
+        
         jmp_flag : OUT STD_LOGIC;                           --Jump flag
         instructions : OUT STD_LOGIC_VECTOR(11 DOWNTO 0);   --Instructions
         SD_7_display : OUT STD_LOGIC_VECTOR(6 DOWNTO 0));   --7 segment display
+        
+
+        
 END NanoProcessor;
 
 ARCHITECTURE Behavioral OF NanoProcessor IS
@@ -199,24 +208,6 @@ BEGIN
         RegSelection => Reg_sel_1
     );
 
-    add_sub : Add_Sub_unit --add sub unit
-    PORT MAP(
-        AA => Number02, --value in second MUX
-        BB => Number01, --value in first MUX
-        SS => AddSubTotal,
-        Sel => Add_Sub_sel,
-        Zero => Zero_Flag,
-        Overflow => Overflow_Flag,
-        Carry => Carry_Flag,
-        Negative => Negative_Flag
-    );
-    MUX_2_way_4 : MUX_2_way_4_bit ----2 way 4 bit multiplexer
-    PORT MAP(
-        AddSubValue => AddSubTotal,
-        InsDecValue => Imediate_value,
-        OutputValue => Register_receiving_value,
-        Selector => Load_sel
-    );
     register_bank : RegisterBank --register bank
     PORT MAP(
         Clk => Clk_out,
@@ -232,6 +223,19 @@ BEGIN
         D => Register_receiving_value,
         X => Register_enable
     );
+
+    add_sub : Add_Sub_unit --add sub unit
+    PORT MAP(
+        AA => Number02, --value in second MUX
+        BB => Number01, --value in first MUX
+        SS => AddSubTotal,
+        Sel => Add_Sub_sel,
+        Zero => Zero_Flag,
+        Overflow => Overflow_Flag,
+        Carry => Carry_Flag,
+        Negative => Negative_Flag
+    );
+    
     instruction_dec : Instruction_Decoder --instruction decoder
     PORT MAP(
         INS => Instruction_bus,
@@ -245,12 +249,7 @@ BEGIN
         Jump_flag => Jump_flag_sel,
         Jump_address => Address_to_jump
     );
-
-    adder : Adder_3_bit --adder 3 bit
-    PORT MAP(
-        AA => Current_Instruction,
-        SS => Adder_3_value
-    );
+    
 
     MUX_2_way_3 : MUX_2_way_3_bit--2 way 3 bit multiplexer
     PORT MAP(
@@ -258,6 +257,25 @@ BEGIN
         JUMP_TO => Address_to_jump,
         Selector => Jump_flag_sel,
         Out_put => Next_instruction
+    );
+    
+    MUX_2_way_4 : MUX_2_way_4_bit ----2 way 4 bit multiplexer
+    PORT MAP(
+        AddSubValue => AddSubTotal,
+        InsDecValue => Imediate_value,
+        OutputValue => Register_receiving_value,
+        Selector => Load_sel
+    );
+
+    Display_7_segment : LUT_16_7 PORT MAP( --7 segment display
+        address => AddSubTotal,
+        data => SD_7_display
+    );
+
+    prom : ProgramRom --program rom
+    PORT MAP(
+        Memory_select => Current_Instruction,
+        Instruction => Instruction_bus
     );
 
     programme_counter : Counter --program counter
@@ -268,17 +286,13 @@ BEGIN
         Current_Ins => Current_Instruction
     );
 
-    prom : ProgramRom --program rom
+    adder : Adder_3_bit --adder 3 bit
     PORT MAP(
-        Memory_select => Current_Instruction,
-        Instruction => Instruction_bus
+        AA => Current_Instruction,
+        SS => Adder_3_value
     );
 
-    Display_7_segment : LUT_16_7 PORT MAP( --7 segment display
-        address => AddSubTotal,
-        data => SD_7_display
-    );
-    
+        
     --selection proper port to each register
     Reg0 <= R0_value;
     Reg1 <= R1_value;
@@ -294,4 +308,9 @@ BEGIN
     instructions <= Instruction_bus;
     Instruction_next <= Next_instruction;
     Instruction_Current<=Current_Instruction;
+    Address_to_jump_check<=Address_to_jump;
+    Adder_3_value_check <= Adder_3_value;
+    Register_receiving_value_check <= Register_receiving_value ;
+    AddSubTotal_check <= AddSubTotal;
+    
 END Behavioral;

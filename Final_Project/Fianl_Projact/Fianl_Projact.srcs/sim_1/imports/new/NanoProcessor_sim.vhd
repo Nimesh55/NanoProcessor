@@ -27,14 +27,20 @@ ARCHITECTURE Behavioral OF NanoProcessor_sim IS
             Num2 : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
             Instruction_next : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
             Instruction_Current: OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
+            --------------------------
+            Address_to_jump_check : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
+            Adder_3_value_check : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
+            Register_receiving_value_check : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
+            AddSubTotal_check : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
+            
             instructions : OUT STD_LOGIC_VECTOR(11 DOWNTO 0);
             SD_7_display : OUT STD_LOGIC_VECTOR(6 DOWNTO 0));
 
     END COMPONENT;
 
     SIGNAL Reset, Clk, jmp_flag, Negative_Flag, Carry_Flag, Overflow_Flag, Zero_Flag : STD_LOGIC;
-    SIGNAL Num2, Num1, Reg7, Reg6, Reg5, Reg4, Reg3, Reg2, Reg1, Reg0 : STD_LOGIC_VECTOR(3 DOWNTO 0);
-    SIGNAL Instruction_next,Instruction_Current : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAL Num2, Num1, Reg7, Reg6, Reg5, Reg4, Reg3, Reg2, Reg1, Reg0,AddSubTotal_check,Register_receiving_value_check : STD_LOGIC_VECTOR(3 DOWNTO 0);
+    SIGNAL Instruction_next,Instruction_Current,Address_to_jump_check,Adder_3_value_check : STD_LOGIC_VECTOR(2 DOWNTO 0);
     SIGNAL instructions : STD_LOGIC_VECTOR(11 DOWNTO 0);
     SIGNAL SD_7_display : STD_LOGIC_VECTOR(6 DOWNTO 0);
     CONSTANT clock_period : TIME := 10ns;
@@ -59,7 +65,11 @@ BEGIN
         Num2 => Num2,
         Instruction_next => Instruction_next,
         Instruction_Current=>Instruction_Current,
+        Address_to_jump_check =>Address_to_jump_check,
+        Adder_3_value_check => Adder_3_value_check,
         instructions => instructions,
+        Register_receiving_value_check => Register_receiving_value_check,
+        AddSubTotal_check => AddSubTotal_check,
         SD_7_display => SD_7_display
     );
     clock_process : PROCESS
